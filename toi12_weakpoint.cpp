@@ -10,38 +10,58 @@ Email : Jirayuwat12@gmail.com
 #include <algorithm>
 #include <limits.h>
 #include <utility>
+#include <queue>
 using namespace std;
 #define FOR(i,s,n) for(int i =s;i<n;i++)
 #define FORR(i,s,n) for(int i =s;i>=n;i--)
 typedef long long ll;
 vector<vector<int>> G;
-vector<bool> arti;
-vector<bool> vst ( 500001,false);
-vector<int> 
-int N,M;
-int DFS1(int start){
-    vst[i] = true;
-    for(int i : G[start]){
-        if(!vst[i])
+int n,m;
+int DFS(int start,int except){
+    map<int,bool> vst;
+    int sum =1;
+    queue<int> Q;
+    Q.push(start);
+    while(!Q.empty( )){
+        sum ++;
+        int u = Q.front( );
+        Q.pop( );
+        vst[u] = true;
+        for(int v : G[u]){
+            if(!vst[v] && v != except){
+                Q.push(v);
+            }
+        }
     }
-} 
-
-int DFS2(int start,int except){
-
+    return sum;
 }
 int main( ){
-    cin>>N>>M;
-    G = vector<vector<int>>(N+1);
-    arti = vector<bool> (N+1,false);
-    FOR(i,0,N){
+    cin>>n>>m;
+    G = vector<vector<int>>(n+1);
+    FOR(i,0,n){
         int u,v;
         cin>>u>>v;
-        G[u].push_back(v);
-        G[v].push_back(u);
+        G[u].emplace_back(v);
+        G[v].emplace_back(u);
     }
-
+    int maxnum = -1;
+    int index;
+    FOR(i,1,n+1){
+        if(i==m) continue;
+        int t = DFS(m,i);
+        if(maxnum < n-t){
+            maxnum = n-t;
+            index = i;
+        }
+    }
+    cout<<index<<'\n'<<maxnum;
     return 0;
 }
 /*
+4 2
+3 2
+1 2
+1 4
+3 4
 
 */
