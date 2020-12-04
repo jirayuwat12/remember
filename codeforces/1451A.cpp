@@ -10,32 +10,35 @@ Email : Jirayuwat12@gmail.com
 #include <algorithm>
 #include <limits.h>
 #include <utility>
-#include <unordered_map>
+#include <math.h>
 using namespace std;
 #define FOR(i,s,n) for(int i =s;i<n;i++)
 #define FORR(i,s,n) for(int i =s;i>=n;i--)
 typedef long long ll;
-int main( ){
-    int n,t;
-    cin>>n>>t;
-    unordered_map<int,unordered_map<int,int>> G;
-    FOR(i,0,n){
-        int s,h,w,o;
-        cin>>s>>h>>w>>o;
-        
-        FOR(i,0,h){
-            FOR(j,0,w){
-                G[i][s+j] +=o;
-            }
-        }
-    }
+
+int ans(ll n){
     int sum = 0;
-    for(auto i : G){
-        for(auto j : i.second){
-            if(j.second == t) sum ++;
+    while(n != 1){
+        if(n&1){
+            n--;
+            sum++;
+        }else if(n==2) n--,sum++;
+        else{
+            n=1;
+            sum +=2;
         }
     }
-    cout<<sum;
+    return sum;
+}
+
+int main( ){
+    int t;
+    cin>>t;
+    ll n;
+    while(t--){
+        cin>>n;
+        cout<<ans(n)<<'\n';
+    }
     return 0;
 }
 /*

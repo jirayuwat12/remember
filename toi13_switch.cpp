@@ -10,32 +10,32 @@ Email : Jirayuwat12@gmail.com
 #include <algorithm>
 #include <limits.h>
 #include <utility>
-#include <unordered_map>
 using namespace std;
 #define FOR(i,s,n) for(int i =s;i<n;i++)
 #define FORR(i,s,n) for(int i =s;i>=n;i--)
 typedef long long ll;
+int n;
+int data[5000000];
 int main( ){
-    int n,t;
-    cin>>n>>t;
-    unordered_map<int,unordered_map<int,int>> G;
-    FOR(i,0,n){
-        int s,h,w,o;
-        cin>>s>>h>>w>>o;
-        
-        FOR(i,0,h){
-            FOR(j,0,w){
-                G[i][s+j] +=o;
+    cin>>n;
+    string ss;
+    cin>>ss;
+    FOR(i,0,n) data[i] = ss[i]-'0';
+    FOR(i,1,n+1){
+        int s = i;
+        bool k = true;
+        FOR(j,0,n){
+            if(s>= n) s =0;
+            if(data[s++] != data[j]) {
+                k = false;
+                break;
             }
         }
-    }
-    int sum = 0;
-    for(auto i : G){
-        for(auto j : i.second){
-            if(j.second == t) sum ++;
+        if(k) {
+            cout<<i;
+            break;
         }
     }
-    cout<<sum;
     return 0;
 }
 /*
